@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>HA Admin</title>
+
+  <script>
+  (function () {
+    const AUTH_KEY = "HA_AUTH_OK";
+    if (sessionStorage.getItem(AUTH_KEY) !== "1") {
+      location.replace("login.html?next=" + encodeURIComponent("admin.html"));
+    }
+  })();
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b1016;--card:#121722;--teal:#14e0c3;--orange:#ff9d2f;--muted:#bfc7d6;}
+    *{box-sizing:border-box;font-family:'Cairo',sans-serif;}
+    body{margin:0;background:var(--bg);color:#fff;padding:18px;}
+    .wrap{max-width:1100px;margin:auto;display:grid;gap:12px;}
+    .card{background:rgba(18,23,34,.9);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media(max-width:900px){.row{grid-template-columns:1fr;}}
+    input, textarea, select{
+      width:100%;padding:12px;border-radius:14px;outline:none;
+      border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.22);color:#fff;font-weight:800;
+    }
+    textarea{min-height:120px;resize:vertical;line-height:1.8;}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+    button{
+      padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.22);color:#fff;font-weight:900;cursor:pointer;
+    }
+    .orange{background:var(--orange);color:#1a0f00;border-color:transparent;}
+    .teal{border-color:rgba(20,224,195,.4);color:var(--teal);background:rgba(20,224,195,.10);}
+    .muted{color:var(--muted);font-size:12px;line-height:1.7;}
+    pre{white-space:pre-wrap;background:rgba(0,0,0,.25);padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.08);}
+    .top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    a{color:inherit;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card top">
+      <div>
+        <div style="font-weight:900;font-size:18px">HA Admin</div>
+        <div class="muted">هنا بتجهّزي الكروت وتاخدي Export تلزقيه في thumbs-data.js</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="./index.html"><button class="teal">الرئيسية</button></a>
+        <button id="btnLogout">Logout</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:900;margin-bottom:8px">إضافة كارت</div>
+
+      <div class="row">
+        <div>
+          <div class="muted">Section Title</div>
+          <input id="secTitle" placeholder="مثال: استايلات سينمائية" />
+        </div>
+        <div>
+          <div class="muted">Section Hint</div>
+          <input id="secHint" placeholder="وصف السكشن" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div>
+          <div class="muted">Card Title</div>
+          <input id="cardTitle" placeholder="مثال: Cinematic 01" />
+        </div>
+        <div>
+          <div class="muted">Image Path</div>
+          <input id="imgPath" placeholder="assets/thumbs/t9.jpg" />
+          <div class="muted">ارفعي الصورة يدويًا داخل assets/thumbs ثم اكتبي المسار.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="muted">Description</div>
+        <input id="cardDesc" placeholder="وصف قصير للكارت" />
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="muted">Prompt Text</div>
+        <textarea id="promptText" placeholder="الصقي البرومبت هنا..."></textarea>
+      </div>
+
+      <div class="btns">
+        <button class="orange" id="btnAdd">Add Card</button>
+        <button class="teal" id="btnExport">Export</button>
+        <button id="btnClear">Clear</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:900;margin-bottom:8px">Preview</div>
+      <pre id="preview">[]</pre>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:900;margin-bottom:8px">Export Output</div>
+      <pre id="exportBox">اضغطي Export</pre>
+      <div class="btns">
+        <button class="teal" id="btnCopy">Copy Export</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./admin.js"></script>
+</body>
+</html>
